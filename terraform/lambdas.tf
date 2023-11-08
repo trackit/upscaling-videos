@@ -56,13 +56,13 @@ resource "aws_lambda_function" "get_dataset_videos" {
   filename         = data.archive_file.lambda_src.output_path
   source_code_hash = filebase64sha256(data.archive_file.lambda_src.output_path)
   runtime          = "python3.9"
-  timeout          = 900
+  timeout          = 600
 
   environment {
     variables = {
-      REGION                  = local.region
-      HQ_VIDEOS_BUCKET_NAME     = aws_s3_bucket.dataset-high-quality-videos.bucket
-      LQ_VIDEOS_BUCKET_NAME     = aws_s3_bucket.dataset-low-quality-videos.bucket
+      REGION                       = local.region
+      DATASET_VIDEOS_BUCKET_NAME   = aws_s3_bucket.dataset-videos.bucket
+      DATASET_VIDEOS_DYNAMODB_NAME = aws_dynamodb_table.youtube_videos.name
     }
   }
 

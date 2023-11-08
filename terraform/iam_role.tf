@@ -1,4 +1,3 @@
-
 resource "aws_iam_role" "role_lambda" {
   name = "${local.prefix}_lambda_role"
 
@@ -44,10 +43,26 @@ resource "aws_iam_policy" "lambda_policy" {
             "s3:PutObject",
           ],
           "Resource" : [
-            "${aws_s3_bucket.dataset-high-quality-videos.arn}/*",
-            "${aws_s3_bucket.dataset-low-quality-videos.arn}/*"
+            "${aws_s3_bucket.dataset-videos.arn}/*",
           ],
           "Effect" : "Allow"
+        },
+        {
+          Action = [
+            "dynamodb:Scan",
+            "dynamodb:UpdateItem",
+          ],
+          Effect   = "Allow",
+          Resource = aws_dynamodb_table.youtube_videos.arn,
+        },
+        {
+          Action = [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+          ],
+          Effect   = "Allow",
+          Resource = "arn:aws:logs:*:*:*",
         }
       ]
     }

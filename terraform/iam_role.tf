@@ -52,8 +52,10 @@ resource "aws_iam_policy" "lambda_policy" {
             "dynamodb:Scan",
             "dynamodb:UpdateItem",
           ],
-          Effect   = "Allow",
-          Resource = aws_dynamodb_table.youtube_videos.arn,
+          "Resource" : [
+            aws_dynamodb_table.youtube_videos.arn,
+          ],
+          "Effect" : "Allow"
         },
         {
           Action = [

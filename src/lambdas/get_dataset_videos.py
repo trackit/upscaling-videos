@@ -43,7 +43,7 @@ def youtube_video_to_s3(video_id: str, video_url: str, quality_p):
     put_mp4_video(bucket_name=dataset_bucket_name, key=f'{quality_p}/{video_id}', video_path=video_path)
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     # Scan the DynamoDB table for videos where 'upload' is False
     response = table.scan(
         FilterExpression=Attr('upload').eq(False)

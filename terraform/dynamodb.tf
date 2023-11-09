@@ -9,4 +9,8 @@ resource "aws_dynamodb_table" "youtube_videos" {
     name = "id"
     type = "S"
   }
+
+  lifecycle {
+    ignore_changes = [tags["Date of Creation"]]
+  }
 }

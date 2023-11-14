@@ -19,11 +19,11 @@ def download_video(video_id: str, video_url: str, quality_p=1080):
     # Configuration for youtube-dl
     ydl_opts = {
         'format': f'bestvideo[height<={quality_p}]+bestaudio/best[height<={quality_p}]',
-        'outtmpl': f'/tmp/%(id)s.{quality_p}p.%(ext)s',
-        'postprocessors': [{
-            'key': 'FFmpegVideoConvertor',
-            'preferedformat': 'mp4',
-        }],
+        'outtmpl': f'./tmp/%(id)s.{quality_p}p.%(ext)s',
+        # 'postprocessors': [{
+        #     'key': 'FFmpegVideoConvertor',
+        #     'preferedformat': 'mp4',
+        # }],
     }
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download([video_url])
